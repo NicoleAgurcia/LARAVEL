@@ -8,6 +8,7 @@ use App\Category;
 use App\Ticket;
 use App\Mailers\AppMailer;
 use App\User;
+use Illuminate\Support\Facades\DB;
 
 
 class TicketsController extends Controller
@@ -44,6 +45,21 @@ class TicketsController extends Controller
 	    return view('tickets.index', compact('tickets', 'categories'));
 	}
 
+
+	public function AllTickets(){
+		if (Auth::user()->is_admin) {
+			$opentickets_user = Ticket::where('status', 'Open')->count();
+			$closetickets_user = Ticket::where('status', 'Closed')->count();
+			$total_user = $closetickets_user + $opentickets_user;
+		}else{
+			$opentickets_user = Ticket::where([['user_id', Auth::user()->id],['status', 'Open']])->count();
+			$closetickets_user = Ticket::where([['user_id', Auth::user()->id],['status', 'Closed']])->count();
+			$total_user = $closetickets_user + $opentickets_user;
+		}
+		return view('home', ['closetickets_user'=> $closetickets_user ,'opentickets_user'=>$opentickets_user, 'All_Tickets'=> $total_user]);
+	}
+
+
 	public function close($ticket_id, AppMailer $mailer){
 	    $ticket = Ticket::where('ticket_id', $ticket_id)->firstOrFail();
 	    $ticket->status = 'Closed';
@@ -77,10 +93,6 @@ class TicketsController extends Controller
 
 	        return redirect()->back()->with("status", "A ticket with ID: #$ticket->ticket_id has been opened.");
 	}
-
-
-
-
 
 
 }

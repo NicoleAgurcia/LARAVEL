@@ -16,7 +16,14 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next){
         if (Auth::user()->is_admin !== 1) {
-            return redirect('home');
+            return redirect('/');
+        } 
+
+        return $next($request);
+    }
+     public function handlee($request, Closure $next){
+        if (Auth::user()->is_agent !== 2) {
+            return redirect('/');
         } 
 
         return $next($request);

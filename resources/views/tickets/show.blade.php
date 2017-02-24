@@ -3,6 +3,7 @@
 @section('title', $ticket->title)
 
 @section('content')
+
     <div  class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
@@ -63,7 +64,53 @@
                         </div>
                     </form>
                 </div>
+
+
+<!--     <section class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box box-info">
+            <div class="box-header">
+              <h3 class="box-title">Text Editor</h3>
+              <div class="pull-right box-tools">
+                <button type="button" class="btn btn-info btn-sm" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                  <i class="fa fa-minus"></i></button>                           
+              </div>
+            </div>
+
+            <div class="box-body pad">
+              <form action="{{ url('comment') }}" method="POST" class="form">
+                {!! csrf_field() !!}
+                <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
+                 
+                  <div class="form-group{{ $errors->has('comment') ? ' has-error' : '' }}">
+                    <textarea id="editor1" name="comment" rows="10" cols="80" class="form-control" ></textarea>
+                    @if ($errors->has('comment'))
+                      <span class="help-block">
+                        <strong>{{ $errors->first('comment') }}</strong>
+                      </span>
+                    @endif
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+              
+              </form>
+            </div>
+          </div>         
+        </div>
+      </div>
+    </section> -->
+
+
+
             </div>
         </div>
     </div>
+   <!--  <script src="/vendor/jQuery/jquery-2.2.3.min.js"></script>
+
+    <script src="https://cdn.ckeditor.com/4.5.7/standard/ckeditor.js"></script> -->
+<!-- Bootstrap WYSIHTML5 -->
+<!-- <script src="/vendor/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+ -->
 @endsection
